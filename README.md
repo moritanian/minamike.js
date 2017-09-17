@@ -63,6 +63,10 @@ var func = function(){
 
 };
 
-(new minamike(func)).exec(); // => Vector3(3,5,7)
+(new minamike(func)).exec(); 
+/* => 
+  Vector3(-1,-1,-1), 
+  Vector3(-1, 2, -1)
+*/
 
 ```
