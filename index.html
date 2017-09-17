@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>minamike.js example</title>
+	<script src="dist/minamike.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+  	<style type="text/css">
+  		h1 {
+  			text-transform: uppercase;
+		    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+		    font-weight: 700;
+  		}
+  		.editor-container {
+  			float: left;  			
+  		}
+  		#editor {
+    		width: 780px;
+    		height: 700px;
+    		border: solid 1px #787878;
+		}
+
+		.console-container {
+			display: inline-block;
+    		width: 40%;
+  			padding-left: 10px;
+  			font-size: 18px;
+		}
+
+		.clear-icon {
+			margin: 0;
+		    padding: 0;
+		    top: 4px;
+		    position: relative;
+		    cursor: pointer;
+		}
+
+		#console {
+			border: solid 1px #8c8c8c;
+		    padding: 10px;
+		    margin: 4px;
+		    min-height: 200px;
+  			font: 14px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+			
+		}
+  	</style>
+  </head>
+  <body>
+
+<h1> minamike.js example </h1>
+
+<div class="editor-container">
+<div id="editor">
+function Vector3(x, y, z){
+
+  this.x = x || 0;
+  this.y = y || 0;
+  this.z = z || 0;
+
+   this.getString = function(){
+    return `Vector3 {
+  x: ${this.x},
+  y: ${this.y},
+  z: ${this.z}
+}`;
+
+  };
+
+  // operator overload
+  Vector3.prototype.__operators__ = {
+    '+' : function(v1, v2){
+      return new Vector3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+    },
+    '-' : function(v1, v2){
+      return new Vector3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+    },
+    '*' : function(v1, v2){ // inner product
+      return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+    },
+    '^' : function(v1, v2){ // exterior product
+      return new Vector3(
+        v1.y * v2.z - v1.z * v2.y,
+        v1.z * v2.x - v1.x * v2.z,
+        v1.x * v2.y - v1.y * v2.x
+      );
+    }
+  };
+
+}
+
+var vec1 = new Vector3(1,2,3);
+var vec2 = new Vector3(2,3,4);
+
+var vec3 = vec1 - vec2;
+var vec4 = vec1 ^ vec2;
+
+console.log(vec3.getString()); // vecv1 - vec2
+console.log(vec4.getString()); // vec1 ^ vec2 (exterior product)
+
+
+</div>
+<button id=exec-button onClick="onClickExec()">exec</button>
+</div>
+
+<div class="console-container">
+	<div class="console-title">console
+		<span class="clear-icon" onClick="onClickClearConsole()">
+			<svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+			 width="18px" height="18px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+				<style type="text/css">
+				<![CDATA[
+					.st0{fill:#4B4B4B;}
+				]]>
+				</style>
+				<g>
+					<path class="st0" d="M437.023,74.977c-99.984-99.969-262.063-99.969-362.047,0c-99.969,99.984-99.969,262.063,0,362.047
+						c99.969,99.969,262.078,99.969,362.047,0S536.992,174.945,437.023,74.977z M137.211,137.211
+						c54.391-54.391,137.016-63.453,201.016-27.531L109.68,338.227C73.758,274.227,82.82,191.602,137.211,137.211z M374.805,374.789
+						c-54.391,54.391-137.031,63.469-201.031,27.547l228.563-228.563C438.258,237.773,429.18,320.414,374.805,374.789z"/>
+				</g>
+			</svg>
+		</span>
+	</div>
+
+	<pre id="console"></pre>
+</div>
+
+<script>
+    
+    var editor = ace.edit("editor");
+    
+    editor.setTheme("ace/theme/dawn");
+    
+    var JavaScriptMode = ace.require("ace/mode/javascript").Mode;	
+	
+	editor.session.setMode(new JavaScriptMode());
+
+	var consoleElement = document.getElementById("console");
+
+	function onClickExec(){
+		
+		var code = editor.getValue();
+		
+		var func = Function(code);
+		
+		var m = new minamike(func, {debug: true});
+
+		console.log(m.compile());
+		
+		m.exec(); 
+		
+		var logLines = m.getLogLines();
+
+		consoleElement.innerHTML += logLines;
+
+	}
+
+	function onClickClearConsole(){
+
+		consoleElement.innerHTML = "";
+
+	}
+
+
+</script>

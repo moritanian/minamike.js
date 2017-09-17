@@ -1,0 +1,39 @@
+{
+  "name": "minamike.js",
+  "version": "0.1.0",
+  "description": "over JavaScript",
+  "main": "./src/index.js",
+  "directories": {
+  },
+  "devDependencies": {
+    "acorn": "^5.1.1",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-es2015": "^6.0.15",
+    "browserify": "^10.2.1",
+    "babelify": "^6.1.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-header": "^1.7.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-strip-comments": "^2.4.5",
+    "gulp-uglify": "^1.5.2",
+    "gulp-util": "^3.0.7",
+    "vinyl-source-stream": "^1.1.0",
+    "vinyl-buffer": "^1.0.0"
+  },
+  "scripts": {
+    "setup": "npm i -g gulp-cli"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moritanian/minamike.js.git"
+  },
+  "keywords": [
+    "minamike",
+    "overjs"
+  ],
+  "author": "moritanian",
+  "license": "MIT"
+}
