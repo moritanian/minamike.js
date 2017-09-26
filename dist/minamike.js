@@ -4,7 +4,7 @@
  * over JavaScript
  *
  * @version 0.1.0
- * @date Mon Sep 18 2017 06:41:42 GMT+0900 (東京 (標準時))
+ * @date Wed Sep 27 2017 00:11:02 GMT+0900 (東京 (標準時))
  *
  * @license MIT
  * The MIT License
@@ -3437,8 +3437,8 @@ var minamike = function minamike(codeFunc) {
     }
 
     function __$__(left, operator, right) {
-        if (right.constructer !== left.constructer || !right.__operators__ || !right.__operators__[operator]) {
-            return Function("\n\t\t\t\treturn " + left + " " + operator + " " + right + "\n\t\t\t")();
+        if (right == null || left == null || right.constructer !== left.constructer || !right.__operators__ || !right.__operators__[operator]) {
+            return Function(['right', 'left'], "return  left  " + operator + " right").call(this, right, left);
         }
 
         return right.__operators__[operator](left, right);

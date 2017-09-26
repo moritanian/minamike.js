@@ -223,11 +223,14 @@ var minamike = function(codeFunc, option = {}){
 
 	// Binary Operator Handler
     function __$__(left, operator, right) {
-       	if(right.constructer !== left.constructer || !right.__operators__ || !right.__operators__[operator])
+       	if(right == null
+            || left == null 
+            || right.constructer !== left.constructer 
+            || !right.__operators__ 
+            || !right.__operators__[operator])
 		{
-			return Function(`
-				return ${left} ${operator} ${right}
-			`)();
+            return (Function(['right', 'left'], `return  left  ${operator} right`))
+                .call(this, right, left);
 		}
 
 		return right.__operators__[operator](left, right);

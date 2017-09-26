@@ -70,3 +70,8 @@ var func = function(){
 */
 
 ```
+
+### build ###
+```
+gulp
+```
