@@ -7,7 +7,8 @@ minamike.js
 
 enable javascript to override and overload.
 
-[Examples](https://moritanian.github.io//minamike.js/)
+[Examples1](https://moritanian.github.io//minamike.js/)
+[Examples2](https://moritanian.github.io//minamike.js/bignumber.html)
 
 ### Usage ###
 

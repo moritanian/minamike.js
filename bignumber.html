@@ -7,6 +7,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js" type="text/javascript" charset="utf-8"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/theme-dawn.js" type="text/javascript" charset="utf-8"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.5.0/math.min.js" type="text/javascript" charset="utf-8"></script>
   	<style type="text/css">
   		h1 {
   			text-transform: uppercase;
@@ -49,27 +50,30 @@
   </head>
   <body>
 <a href="https://github.com/moritanian/minamike.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
-
 <h1> minamike.js example </h1>
 
 <div class="editor-container">
 <div id="editor">
-const std = {
-	cout: "cout",
-	endl: "endl"	
-};
+Number.prototype.__operators__ = {
+    '+' : function(v1, v2){
+        return math.add(math.bignumber(v1), math.bignumber(v2))
+    },
+    '-' : function(v1, v2){
+        return math.add(math.bignumber(v1), math.bignumber(-v2))
+    },
+    '*' : function(v1, v2){
+        return math.multiply(math.bignumber(v1), math.bignumber(-v2))
+    },
+    '/' : function(v1, v2){
+        return math.divide(math.bignumber(v1), math.bignumber(-v2))
+    },
+    };
 
-String.prototype.__operators__ = {
-    '<<' : function(s1, s2){
-      if(s1 === std.cout){
-          console.log(s2);
-      } else {
-          return s1 << s2;
-      }
-    }
-  };
- 
- std.cout << "Hello World!!" << std.endl;
+var v1 = 1e20
+var v2 = 2
+console.log(v1 - v2)
+console.log(v1 / v2)    
+    
 
 
 </div>
